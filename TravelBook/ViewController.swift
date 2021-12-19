@@ -169,7 +169,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         
     }
     
-    //pini özelleştirmek
+    //pini özelleştirmek, haritayı açıp pine gitmek
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         //Kullanıcının yerini pinle göstermek istemiyoruz
@@ -192,6 +192,35 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
             pinView?.annotation = annotation
         }
         return pinView
+    }
+    
+    //navigasyon için tıklandığını anlamak
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        
+        if selectedTitle != "" {
+            let requestLocation = CLLocation(latitude: annotationLatitude, longitude: annotationLongtitude)
+            CLGeocoder().reverseGeocodeLocation(requestLocation) { placemarks, error in
+                
+                if let placemark = placemarks {
+                    if placemark.count > 0 {
+                        
+                        let newPlacemark = MKPlacemark(placemark: placemark[0])
+                        //navigasyonu açabilmek için map item gerekli, map item için de placemark objesi gerekli reversegeocodelocation metoduyla alıyoruz
+                        let item = MKMapItem(placemark: newPlacemark)
+                        item.name = self.annotationTitle
+                        //hangi modda açacağımızı belirttikten sonra navigasyon açılabilir
+                        let launchOptions = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeDriving]
+                        item.openInMaps(launchOptions: launchOptions)
+                        
+                        
+                        
+                        
+                    }
+                }
+                
+            }
+        }
+        
     }
     
     
@@ -221,6 +250,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
                 self.navigationController?.popViewController(animated: true)
         
     }
+    
     
     
 
