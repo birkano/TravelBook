@@ -45,23 +45,29 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         //konumu güncellemeye başladık
         locationManager.startUpdatingLocation()
         
+        navigationItem.title = "Detay"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Kaydet", style: .plain, target: self, action: #selector(saveButtonClicked))
+
+        
         
         //klavye kapama
         let hideKeyboardRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        mapView.addGestureRecognizer(hideKeyboardRecognizer)
-
+        view.addGestureRecognizer(hideKeyboardRecognizer)
+        
         //uzun dokunulduğu zaman devreye girer
         let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(chooseLocation(gestureRecognizer:)))
         // basılı tutma süresi
-        gestureRecognizer.minimumPressDuration = 2
+        gestureRecognizer.minimumPressDuration = 0.5
         mapView.addGestureRecognizer(gestureRecognizer)
+        
+        
         
         //eğer veri geliyorsa gösterilmesi gereken
         if selectedTitle != "" {
             
             //girilen veriyi açınca savebutton'u kapadım
             saveButton.isHidden = true
-
+            navigationItem.rightBarButtonItem?.isEnabled = false
             //coredata
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let context = appDelegate.persistentContainer.viewContext
@@ -103,7 +109,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
                             
                             locationManager.stopUpdatingLocation()
                             
-                            let span = MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.04)
+                            let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
                             let region = MKCoordinateRegion(center: coordinate, span: span)
                             mapView.setRegion(region, animated: true)
                             
@@ -123,7 +129,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     
     //klavye kapama fonksiyonu
     @objc func hideKeyboard() {
-        mapView.endEditing(true)
+        view.endEditing(true)
     }
     
     //Uzun dokunulduğu zaman ne olacak
@@ -160,9 +166,9 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         //koordinatı diziden aldık
         let location = CLLocationCoordinate2D(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude)
         //zoom seviyesi ayarlama
-        let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+        let span = MKCoordinateSpan(latitudeDelta: 0.015, longitudeDelta: 0.015)
         let region = MKCoordinateRegion(center: location, span: span)
-        mapView.setRegion(region, animated: true)
+        mapView.setRegion(region, animated: false)
         } else {
             //
         }
@@ -224,7 +230,8 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     }
     
     
-    @IBAction func saveButtonClicked(_ sender: Any) {
+    //@IBAction (_ sender: Any)
+    @objc func saveButtonClicked() {
         
         let appDeletagate = UIApplication.shared.delegate as! AppDelegate
         let context = appDeletagate.persistentContainer.viewContext

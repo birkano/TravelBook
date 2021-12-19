@@ -22,6 +22,9 @@ class toDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         tableView.delegate = self
         tableView.dataSource = self
         
+        navigationItem.title = "Favori Mekanlarım"
+
+        //add button
         navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(addButtonClick))
         
         getData()
