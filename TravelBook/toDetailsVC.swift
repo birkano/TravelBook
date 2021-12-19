@@ -79,7 +79,7 @@ class toDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         
         
     }
-    //ekle butonuna tıklanınca nereye gideceğini gösterdik
+    //ekle butonuna tıklanınca nereye gideceğini gösterdik, ikinci sayfaya gönderiyoruz
     @objc func addButtonClick() {
         chosenTitle = ""
         performSegue(withIdentifier: "toDetailsVC", sender: nil)

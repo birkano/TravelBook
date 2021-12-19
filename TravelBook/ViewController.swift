@@ -48,6 +48,8 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         navigationItem.title = "Detay"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Kaydet", style: .plain, target: self, action: #selector(saveButtonClicked))
 
+        //kullanmadığım butonu gizledim
+        saveButton.isHidden = true
         
         
         //klavye kapama
@@ -233,28 +235,40 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     //@IBAction (_ sender: Any)
     @objc func saveButtonClicked() {
         
-        let appDeletagate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDeletagate.persistentContainer.viewContext
-        
-        let newPlace = NSEntityDescription.insertNewObject(forEntityName: "Places", into: context)
-        
-        newPlace.setValue(nameText.text, forKey: "title")
-        newPlace.setValue(commentText.text, forKey: "subtitle")
-        newPlace.setValue(chosenLatitude, forKey: "latitude")
-        newPlace.setValue(chosenLongtitude, forKey: "longtitude")
-        newPlace.setValue(UUID(), forKey: "id")
-        
-        do{
-            try context.save()
-            print("success")
+        //nametextten gelen veri doluysa işlem yap yoksa yapma dedik
+        if nameText.text != "" {
+            let appDeletagate = UIApplication.shared.delegate as! AppDelegate
+            let context = appDeletagate.persistentContainer.viewContext
             
-        } catch {
-            print("failed")
+            let newPlace = NSEntityDescription.insertNewObject(forEntityName: "Places", into: context)
+            
+            newPlace.setValue(nameText.text, forKey: "title")
+            newPlace.setValue(commentText.text, forKey: "subtitle")
+            newPlace.setValue(chosenLatitude, forKey: "latitude")
+            newPlace.setValue(chosenLongtitude, forKey: "longtitude")
+            newPlace.setValue(UUID(), forKey: "id")
+            
+            do{
+                try context.save()
+                print("success")
+                
+            } catch {
+                print("failed")
+            }
+            
+            // diğer sayfaya bildirim gönderdik, bu bildirim gidince veriyi yenile diyeceğiz
+                    NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: "newData"), object: nil)
+                    self.navigationController?.popViewController(animated: true)
+        print("oldu")
+        } else {
+            //veri girmeyince uyarı mesajı gönder
+            let alert = UIAlertController(title: "Hata", message: "Ad girmediniz", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Tamam", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            print("olmadı")
         }
         
-        // diğer sayfaya bildirim gönderdik, bu bildirim gidince veriyi yenile diyeceğiz
-                NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: "newData"), object: nil)
-                self.navigationController?.popViewController(animated: true)
+
         
     }
     
