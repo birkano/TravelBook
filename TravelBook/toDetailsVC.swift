@@ -28,7 +28,12 @@ class toDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
 
     }
     
-    func getData() {
+    //    viewdidload bir kez çalıştığı için diğer sayfadan mesaj gelirse viewwillappear'da işlem yaptırıyoruz
+    override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(getData), name: NSNotification.Name(rawValue: "newData"), object: nil)
+    }
+    
+    @objc func getData() {
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext

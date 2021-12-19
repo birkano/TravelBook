@@ -101,6 +101,12 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
                             nameText.text = annotationTitle
                             commentText.text = annotationSubTitle
                             
+                            locationManager.stopUpdatingLocation()
+                            
+                            let span = MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.04)
+                            let region = MKCoordinateRegion(center: coordinate, span: span)
+                            mapView.setRegion(region, animated: true)
+                            
                             
                         }
                     }
@@ -150,14 +156,42 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     
     //konumu mapte göstermek için gerekli fonksiyon
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if selectedTitle == "" {
         //koordinatı diziden aldık
         let location = CLLocationCoordinate2D(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude)
         //zoom seviyesi ayarlama
         let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
         let region = MKCoordinateRegion(center: location, span: span)
         mapView.setRegion(region, animated: true)
+        } else {
+            //
+        }
         
+    }
+    
+    //pini özelleştirmek
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
+        //Kullanıcının yerini pinle göstermek istemiyoruz
+        if annotation is MKUserLocation {
+            return nil
+        }
+        
+        let reuseID = "myAnnotation"
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseID) as? MKPinAnnotationView
+        
+        if pinView == nil {
+            
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
+            pinView?.canShowCallout = true
+            pinView?.tintColor = UIColor.black
+            
+            let button = UIButton(type: UIButton.ButtonType.detailDisclosure)
+            pinView?.rightCalloutAccessoryView = button
+        } else {
+            pinView?.annotation = annotation
+        }
+        return pinView
     }
     
     
@@ -181,6 +215,10 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         } catch {
             print("failed")
         }
+        
+        // diğer sayfaya bildirim gönderdik, bu bildirim gidince veriyi yenile diyeceğiz
+                NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: "newData"), object: nil)
+                self.navigationController?.popViewController(animated: true)
         
     }
     
