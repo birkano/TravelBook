@@ -38,6 +38,9 @@ class toDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         NotificationCenter.default.addObserver(self, selector: #selector(getData), name: NSNotification.Name(rawValue: "newData"), object: nil)
     }
     
+    
+
+    
     @objc func getData() {
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -160,5 +163,9 @@ class toDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
                 
             }
         }
+    //delete butonu adını değiştirme
+    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "Sil"
+    }
     
 }
