@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B86ECEE276F789F008BD9A2 /* toDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B86ECED276F789F008BD9A2 /* toDetailsVC.swift */; };
 		5BDA31DA276CEA730090E48D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDA31D9276CEA730090E48D /* AppDelegate.swift */; };
 		5BDA31DC276CEA730090E48D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDA31DB276CEA730090E48D /* SceneDelegate.swift */; };
 		5BDA31DE276CEA730090E48D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDA31DD276CEA730090E48D /* ViewController.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5B86ECED276F789F008BD9A2 /* toDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = toDetailsVC.swift; sourceTree = "<group>"; };
 		5BDA31D6276CEA730090E48D /* TravelBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TravelBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BDA31D9276CEA730090E48D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5BDA31DB276CEA730090E48D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 				5BDA31DB276CEA730090E48D /* SceneDelegate.swift */,
 				5BDA31DD276CEA730090E48D /* ViewController.swift */,
 				5BDA31DF276CEA730090E48D /* Main.storyboard */,
+				5B86ECED276F789F008BD9A2 /* toDetailsVC.swift */,
 				5BDA31E5276CEA740090E48D /* Assets.xcassets */,
 				5BDA31E7276CEA740090E48D /* LaunchScreen.storyboard */,
 				5BDA31EA276CEA740090E48D /* Info.plist */,
@@ -143,6 +146,7 @@
 			files = (
 				5BDA31E4276CEA730090E48D /* TravelBook.xcdatamodeld in Sources */,
 				5BDA31DE276CEA730090E48D /* ViewController.swift in Sources */,
+				5B86ECEE276F789F008BD9A2 /* toDetailsVC.swift in Sources */,
 				5BDA31DA276CEA730090E48D /* AppDelegate.swift in Sources */,
 				5BDA31DC276CEA730090E48D /* SceneDelegate.swift in Sources */,
 			);
