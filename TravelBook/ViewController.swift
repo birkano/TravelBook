@@ -52,6 +52,10 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         saveButton.isHidden = true
         
         
+        //kullanıcının anlık konumunu ekledim
+        configureMapView()
+        
+        
         //klavye kapama
         let hideKeyboardRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(hideKeyboardRecognizer)
@@ -127,6 +131,16 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
             //add new data
         }
         
+    }
+    
+    
+    //anlık konum işareti için fonksiyon
+    func configureMapView() {
+        mapView.showsUserLocation = true // Bool değerini 'true' yaparak cihazın konumunu haritada gösterdik.
+        mapView.userTrackingMode = .follow // Cihazın konumunun harita üzerinde takibi için gerekli olan kod.
+        mapView.isZoomEnabled = true
+        mapView.isScrollEnabled = true
+        mapView.showsTraffic = true
     }
     
     //klavye kapama fonksiyonu

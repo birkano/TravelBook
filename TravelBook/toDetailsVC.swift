@@ -58,6 +58,7 @@ class toDetailsVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
                 self.titleArray.removeAll(keepingCapacity: false)
                 self.idArray.removeAll(keepingCapacity: false)
                 
+                //diziye item ekliyoruz
                 for result in results as! [NSManagedObject] {
                     //diziye veritabanından itemleri çekiyoruz, listeleyeceğiz
                     if let title = result.value(forKey: "title") as? String {
